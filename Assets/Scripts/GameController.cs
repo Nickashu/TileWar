@@ -26,6 +26,7 @@ public class GameController : MonoBehaviour {
     }
 
     private void Update() {
+        /*
         if (!gameStart) {
             if (finishedAims == 0) {
                 arrowPlayer1.SetActive(true);
@@ -43,6 +44,7 @@ public class GameController : MonoBehaviour {
                 StartCoroutine(StartGameDelay());
             }
         }
+        */
     }
 
     private IEnumerator StartGameDelay() {

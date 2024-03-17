@@ -1190,7 +1190,7 @@ MonoBehaviour:
   player2: {fileID: 731597473}
   arrowPlayer1: {fileID: 637941802}
   arrowPlayer2: {fileID: 680618384}
-  delayChangeTile: 0.1
+  delayChangeTile: 0.05
   finishedAims: 0
 --- !u!4 &440960007
 Transform:
@@ -1490,7 +1490,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &731597472
 Transform:
   m_ObjectHideFlags: 0

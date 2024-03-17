@@ -12,7 +12,14 @@ public class Player : MonoBehaviour {
 
     private void Start() {
         rb = GetComponent<Rigidbody2D>();
+        rb.velocity = new Vector2(Random.Range(0, 100), Random.Range(0, 100)).normalized * movementSpeed;
+        direction = new Vector2(1, 1).normalized;
         //rb.AddForce(new Vector2(Random.Range(0, 100), Random.Range(0, 100)).normalized * movementSpeed, ForceMode2D.Impulse);
+    }
+
+    private void Update() {
+        //Debug.Log("velocidade: " + rb.velocity);
+        rb.velocity = direction * movementSpeed;
     }
 
     public void SetDirection(Vector2 dir) {
@@ -27,13 +34,29 @@ public class Player : MonoBehaviour {
             if (collision.gameObject.CompareTag("bg")) {
                 Vector2 offSet = calculateOffSetCollision(collision.GetContact(i).point);
                 Vector2 hitTilePosition = collision.GetContact(i).point + offSet;
-                Debug.Log(hitTilePosition);
+                //Debug.Log(hitTilePosition);
                 Grid tileMapGrid = enemyTileMap.layoutGrid;
                 Vector3Int tilePosition = tileMapGrid.WorldToCell(hitTilePosition);
                 changeTile(tilePosition);
             }
         }
-        rb.AddForce(collision.GetContact(0).normal.normalized * movementSpeed, ForceMode2D.Impulse);    //O movimento será um pouco aleatório
+        Vector2 normal = collision.GetContact(0).normal.normalized;
+        direction = Vector2.Reflect(direction, normal).normalized;
+        //rb.velocity = Vector2.Reflect(rb.velocity, normal).normalized * movementSpeed;
+        //Debug.Log(rb.velocity);
+        /*
+        if (rb.velocity.x <= 0.001 && rb.velocity.x >= -0.001) {
+            //Debug.Log("travou x");
+            Vector2 newVelocity = new Vector2(Random.Range(-10, 11), rb.velocity.y);
+            rb.velocity = newVelocity.normalized * movementSpeed;
+        }
+        if (rb.velocity.y <= 0.001 && rb.velocity.y >= -0.001) {
+            //Debug.Log("travou y");
+            Vector2 newVelocity = new Vector2(rb.velocity.x, Random.Range(-10, 11));
+            rb.velocity = newVelocity.normalized * movementSpeed;
+        }
+        */
+        //rb.AddForce(collision.GetContact(0).normal.normalized * movementSpeed, ForceMode2D.Impulse);    //O movimento será um pouco aleatório
     }
     private void changeTile(Vector3Int tilePosition) {
         StartCoroutine(changeTileDelay(tilePosition));
